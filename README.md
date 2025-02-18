@@ -1,19 +1,20 @@
-# 💬 Chatbot template
+# Landlord Chatbot
 
-A simple Streamlit app that shows how to build a chatbot using OpenAI's GPT-3.5.
-
-[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://chatbot-template.streamlit.app/)
-
-### How to run it on your own machine
+### How to run it 
 
 1. Install the requirements
 
    ```
    $ pip install -r requirements.txt
    ```
+2. Set environmental variable
+  - Create the file `.env`
+  - Create the variable `GOOGLE_API_KEY` and paste the your key value.
 
-2. Run the app
+   P.S. You also may create `.toml` file and paste the key
+
+3. Run the app
 
    ```
-   $ streamlit run streamlit_app.py
+   $ streamlit run landlord.py
    ```
