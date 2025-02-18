@@ -5,12 +5,15 @@ import typing_extensions as typing
 from dotenv import load_dotenv
 
 
+
 load_dotenv()
-my_api_key = os.getenv('GOOGLE_API_KEY')
 # my_api_key = st.secrets['GOOGLE_API_KEY']
+
+my_api_key = os.getenv('GOOGLE_API_KEY')
 
 
 genai.configure(api_key=my_api_key)
+
 
 
 # You are a virtual realtor looking for housing and apartments on the secondary market in Ukraine and Poland.
