@@ -1,3 +1,4 @@
+import time
 import os
 import streamlit as st
 import google.generativeai as genai
@@ -5,29 +6,12 @@ import typing_extensions as typing
 from dotenv import load_dotenv
 
 
-
 load_dotenv()
-# my_api_key = st.secrets['GOOGLE_API_KEY']
-
 my_api_key = os.getenv('GOOGLE_API_KEY')
 
 
 genai.configure(api_key=my_api_key)
 
-
-
-# You are a virtual realtor looking for housing and apartments on the secondary market in Ukraine and Poland.
-
-# Check whether there is such district/street in this city. Also check whether the whether such street is located in the district.
-# But user may not answer these questions about district and street.
-
-# 4  Additional characteristics.
-# If the user mentiones smth, you may ask for details about (if needed):
-# - Apartment's renovation state
-# - If the apartment is equipped with furniture
-# - If the apartment is equipped with autonomous power source
-# - If the apartment is equipped with fiber optic
-# - If shelter is available in the building
 
 instruction = """
 You are a LetAFlat chatbot, a virtual realtor that helps to create rental ads for houses and apartments in Ukraine and Poland.
@@ -41,7 +25,7 @@ In the beginning ask the questions, user must answer:
 
 
 1. Location
-Say that for now only Lviv available. (!!!Save this in settings!!!). So, for now, do not ask about the city, just inform the user.
+Say that for now only Lviv available. (!!!Save this in settings!!!). Just inform the user.
 Ask about the address of the property. User must enter the district, street, and house number. 
 **This question is required. So if the user has not answered the question, ask again until he/she does.
 **Should follow house number pattern, i.e 116/7, 22B, etc.
@@ -72,7 +56,7 @@ Ask again, if you need required attributes:
 
 6.
 Ask the user whether it is okay if students, or childern, or pets live in the apartment.
-(Pet-friendliness, child-friendliness, sudent-friendliness)
+(Pet-friendliness, child-friendliness, student-friendliness)
 Ask again to clarify (if there is a nacessarity).
 **It's okay if the user has no such prefferences and didn't answer any questions from part 6. In such case, move to the next question.
 
@@ -159,7 +143,7 @@ def typing_effect(text, container):
     for char in text:
         output += char
         container.markdown(output)
-        # time.sleep(0.02)  # Adjust speed of typing here
+        time.sleep(0.02)  # Adjust speed of typing here
 
 
 model = genai.GenerativeModel("gemini-1.5-flash",
@@ -193,7 +177,6 @@ for message in st.session_state.chat_history:
 
 
 def run_chat():
-    print(st.session_state.chat_history_model)
     if not st.session_state.chat_end:
         chat.history = st.session_state.chat_history_model
         user_input = st.chat_input("Say something")
@@ -211,11 +194,7 @@ def run_chat():
                                                       "content":
                                                       response.candidates[0].content.parts[0].text})
 
-            print('\n')
-            print(len(chat.history))
-
         st.session_state.chat_history_model = chat.history
-
 
 
 run_chat()
